@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitácora sobre el Talento Extraordinario</title>
+<style>
+  :root{
+    --paper:#F3EEE1;
+    --paper-dark:#E8E1CC;
+    --ink:#26241E;
+    --ink-soft:#5B5648;
+    --indigo:#243B55;
+    --gold:#C89B3C;
+    --line:#D8CFB4;
+    --accent:#243B55;
+    --radius:14px;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --sans: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(200,155,60,0.08), transparent 40%),
+      var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+  }
+
+  /* ---------- Andean geometric rule (decorative, not clip-art) ---------- */
+  .zig{
+    height:10px;
+    width:100%;
+    background:
+      linear-gradient(135deg, var(--accent) 25%, transparent 25%) -5px 0,
+      linear-gradient(225deg, var(--accent) 25%, transparent 25%) -5px 0;
+    background-size:20px 20px;
+    background-repeat:repeat-x;
+    opacity:0.55;
+  }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:40;
+    background:var(--indigo);
+    color:#F3EEE1;
+    border-bottom:4px solid var(--gold);
+  }
+  .header-inner{
+    max-width:1180px;
+    margin:0 auto;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-decoration:none;
+    color:inherit;
+  }
+  .logo-badge{flex:none;}
+  .brand-text h1{
+    font-family:var(--serif);
+    font-size:1.5rem;
+    margin:0;
+    letter-spacing:0.2px;
+    color:#fff;
+  }
+  .brand-text p{
+    margin:2px 0 0;
+    font-size:0.8rem;
+    color:#D9CFA9;
+  }
+  .menu-toggle{
+    margin-left:auto;
+    display:none;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.4);
+    color:#fff;
+    border-radius:8px;
+    padding:8px 10px;
+    font-size:1rem;
+    cursor:pointer;
+  }
+  #accentbar{height:5px; width:100%; background:var(--accent); transition:background .35s ease;}
+
+  /* ---------- Layout ---------- */
+  .app{
+    max-width:1180px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:250px 1fr;
+    gap:28px;
+    padding:26px 20px 60px;
+  }
+
+  nav.sidebar{
+    align-self:start;
+    position:sticky;
+    top:86px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:14px 10px;
+    max-height:calc(100vh - 110px);
+    overflow-y:auto;
+  }
+  .nav-group{margin-bottom:14px;}
+  .nav-group:last-child{margin-bottom:0;}
+  .nav-group h3{
+    font-family:var(--serif);
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--ink-soft);
+    margin:6px 10px 6px;
+  }
+  .nav-link{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 10px;
+    border-radius:9px;
+    color:var(--ink);
+    text-decoration:none;
+    font-size:0.92rem;
+    border-left:3px solid transparent;
+  }
+  .nav-link .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--dotcolor,#999);
+    flex:none;
+  }
+  .nav-link:hover{background:var(--paper-dark);}
+  .nav-link.active{
+    background:var(--paper-dark);
+    border-left-color:var(--dotcolor,#999);
+    font-weight:600;
+  }
+
+  main#content{min-width:0;}
+
+  .page{display:none;}
+  .page.active{display:block; animation:fadeIn .35s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .page-head{
+    border-bottom:3px solid var(--accent);
+    padding-bottom:14px;
+    margin-bottom:22px;
+  }
+  .page-tag{
+    display:inline-block;
+    font-size:0.72rem;
+    letter-spacing:0.4px;
+    color:#fff;
+    background:var(--accent);
+    padding:3px 10px;
+    border-radius:20px;
+    margin-bottom:10px;
+  }
+  .page-head h2{
+    font-family:var(--serif);
+    font-size:1.9rem;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .page-head .lede{
+    font-size:1.02rem;
+    color:var(--ink-soft);
+    max-width:62ch;
+  }
+
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-left:5px solid var(--accent);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    margin-bottom:18px;
+  }
+  .card h3{
+    font-family:var(--serif);
+    margin:0 0 8px;
+    font-size:1.15rem;
+    color:var(--ink);
+  }
+  .card h4{
+    font-size:1rem;
+    margin:14px 0 6px;
+    color:var(--accent);
+  }
+  .card p{margin:0 0 10px;}
+  .card ul, .card ol{margin:0 0 10px; padding-left:22px;}
+  .card li{margin-bottom:5px;}
+  .note{
+    font-size:0.9rem;
+    background:var(--paper);
+    border:1px dashed var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    color:var(--ink-soft);
+  }
+  .note strong{color:var(--ink);}
+
+  table.info{
+    width:100%;
+    border-collapse:collapse;
+    margin:10px 0 14px;
+    font-size:0.94rem;
+  }
+  table.info th, table.info td{
+    border:1px solid var(--line);
+    padding:8px 10px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.info th{
+    background:var(--paper-dark);
+    font-family:var(--serif);
+    font-weight:normal;
+  }
+
+  details.sub{
+    border:1px solid var(--line);
+    border-radius:10px;
+    margin-bottom:12px;
+    overflow:hidden;
+  }
+  details.sub summary{
+    cursor:pointer;
+    padding:12px 16px;
+    font-family:var(--serif);
+    font-size:1.05rem;
+    background:var(--paper-dark);
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  details.sub summary::-webkit-details-marker{display:none;}
+  details.sub summary:after{
+    content:"+";
+    font-size:1.2rem;
+    color:var(--accent);
+  }
+  details.sub[open] summary:after{content:"–";}
+  details.sub .sub-body{padding:14px 16px;}
+
+  .steps{list-style:none; margin:0; padding:0; counter-reset:step;}
+  .steps li{
+    counter-increment:step;
+    display:flex;
+    gap:14px;
+    padding:10px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .steps li:last-child{border-bottom:none;}
+  .steps li:before{
+    content:counter(step);
+    flex:none;
+    width:28px;height:28px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.85rem;
+    font-family:var(--serif);
+  }
+
+  /* ---------- Image slot ---------- */
+  .img-slot{
+    border:2px dashed var(--accent);
+    border-radius:12px;
+    background:rgba(0,0,0,0.02);
+    padding:18px;
+    text-align:center;
+    margin:14px 0 18px;
+    color:var(--ink-soft);
+  }
+  .img-slot .glyph{font-size:1.8rem; display:block; margin-bottom:6px;}
+  .img-slot .cap-label{
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    color:var(--accent);
+    display:block;
+    margin-bottom:4px;
+  }
+  .img-slot p{margin:0; font-size:0.9rem;}
+
+  /* ---------- Home cards grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:16px;
+    margin:20px 0 6px;
+  }
+  .aspect-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    border-top:5px solid var(--c, var(--accent));
+  }
+  .aspect-icon{
+    width:46px;height:46px;
+    border-radius:50%;
+    background:var(--c, var(--accent));
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+  }
+  .aspect-card h3{
+    font-family:var(--serif);
+    font-size:1.05rem;
+    margin:0;
+  }
+  .aspect-card p{margin:0; font-size:0.92rem; color:var(--ink-soft); flex:1;}
+  .aspect-card a.go{
+    align-self:flex-start;
+    font-size:0.85rem;
+    color:var(--c, var(--accent));
+    font-weight:600;
+    text-decoration:none;
+    border-bottom:1px solid currentColor;
+  }
+
+  .taller-intro-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin:22px 0;
+  }
+  .taller-box{
+    border-radius:var(--radius);
+    padding:20px;
+    color:#fff;
+  }
+  .taller-box h3{font-family:var(--serif); margin:0 0 8px; font-size:1.2rem;}
+  .taller-box p{margin:0 0 12px; font-size:0.93rem; opacity:0.95;}
+  .taller-box a{
+    display:inline-block;
+    background:rgba(255,255,255,0.18);
+    padding:7px 14px;
+    border-radius:20px;
+    color:#fff;
+    text-decoration:none;
+    font-size:0.85rem;
+    border:1px solid rgba(255,255,255,0.5);
+  }
+
+  footer.site{
+    text-align:center;
+    padding:26px 20px 40px;
+    color:var(--ink-soft);
+    font-size:0.82rem;
+  }
+
+  @media (max-width: 860px){
+    .app{grid-template-columns:1fr;}
+    nav.sidebar{
+      position:fixed;
+      top:0; left:0; right:0; bottom:0;
+      max-height:none;
+      z-index:60;
+      transform:translateX(-100%);
+      transition:transform .25s ease;
+      border-radius:0;
+      padding-top:70px;
+    }
+    nav.sidebar.open{transform:translateX(0);}
+    .menu-toggle{display:inline-block;}
+    .taller-intro-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <a href="#home" class="brand" data-page="home">
+      <span class="logo-badge">
+        <svg width="46" height="46" viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="23" cy="23" r="22" fill="#F3EEE1" stroke="#C89B3C" stroke-width="2"/>
+          <path d="M9 30 L9 15 Q16 10 23 15 Q30 10 37 15 L37 30 Q30 25 23 30 Q16 25 9 30 Z"
+                fill="none" stroke="#243B55" stroke-width="2.1" stroke-linejoin="round"/>
+          <line x1="23" y1="15" x2="23" y2="30" stroke="#243B55" stroke-width="2.1"/>
+          <path d="M23 8 L24.6 12.3 L29.2 12.3 L25.6 15 L27 19.3 L23 16.7 L19 19.3 L20.4 15 L16.8 12.3 L21.4 12.3 Z"
+                fill="#C89B3C"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <h1>Bitácora sobre el Talento Extraordinario</h1>
+        <p>Notas de los talleres del Programa de Atención Integral · SEP Bolivia</p>
+      </span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰ Menú</button>
+  </div>
+  <div id="accentbar"></div>
+</header>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="nav-group">
+      <h3>Inicio</h3>
+      <a href="#home" class="nav-link" data-page="home" style="--dotcolor:#C89B3C"><span class="dot"></span>Resumen general</a>
+    </div>
+
+    <div class="nav-group">
+      <h3>Taller 1 · Programa de Atención Integral</h3>
+      <a href="#t1-intro" class="nav-link" data-page="t1-intro" style="--dotcolor:#29335C"><span class="dot"></span>Presentación del taller</a>
+      <a href="#t1-tipos" class="nav-link" data-page="t1-tipos" style="--dotcolor:#1B6C82"><span class="dot"></span>Tipos y campos de talento</a>
+      <a href="#t1-organizacion" class="nav-link" data-page="t1-organizacion" style="--dotcolor:#3D5A80"><span class="dot"></span>Organización administrativa</a>
+      <a href="#t1-deteccion" class="nav-link" data-page="t1-deteccion" style="--dotcolor:#556B8D"><span class="dot"></span>Detección</a>
+      <a href="#t1-identificacion" class="nav-link" data-page="t1-identificacion" style="--dotcolor:#2E4057"><span class="dot"></span>Identificación</a>
+      <a href="#t1-modalidades" class="nav-link" data-page="t1-modalidades" style="--dotcolor:#6C5B7B"><span class="dot"></span>Modalidades de atención</a>
+      <a href="#t1-estrategias" class="nav-link" data-page="t1-estrategias" style="--dotcolor:#355C7D"><span class="dot"></span>Estrategias educativas</a>
+      <a href="#t1-operativos" class="nav-link" data-page="t1-operativos" style="--dotcolor:#4B6584"><span class="dot"></span>Operativos y registro</a>
+      <a href="#t1-rural" class="nav-link" data-page="t1-rural" style="--dotcolor:#45526E"><span class="dot"></span>Atención en área rural</a>
+      <a href="#t1-preguntas" class="nav-link" data-page="t1-preguntas" style="--dotcolor:#274156"><span class="dot"></span>Preguntas y respuestas</a>
+    </div>
+
+    <div class="nav-group">
+      <h3>Taller 2 · Adaptaciones Curriculares</h3>
+      <a href="#t2-intro" class="nav-link" data-page="t2-intro" style="--dotcolor:#B5451B"><span class="dot"></span>Presentación del taller</a>
+      <a href="#t2-que-son" class="nav-link" data-page="t2-que-son" style="--dotcolor:#C97C2A"><span class="dot"></span>¿Qué son?</a>
+      <a href="#t2-importancia" class="nav-link" data-page="t2-importancia" style="--dotcolor:#A6763B"><span class="dot"></span>Importancia</a>
+      <a href="#t2-tipos" class="nav-link" data-page="t2-tipos" style="--dotcolor:#B8860B"><span class="dot"></span>Tipos de enriquecimiento</a>
+      <a href="#t2-implementacion" class="nav-link" data-page="t2-implementacion" style="--dotcolor:#8C6239"><span class="dot"></span>Proceso de implementación</a>
+      <a href="#t2-ejemplos" class="nav-link" data-page="t2-ejemplos" style="--dotcolor:#C1440E"><span class="dot"></span>Ejemplos de actividades</a>
+      <a href="#t2-beneficios" class="nav-link" data-page="t2-beneficios" style="--dotcolor:#9C6644"><span class="dot"></span>Beneficios</a>
+      <a href="#t2-recomendaciones" class="nav-link" data-page="t2-recomendaciones" style="--dotcolor:#6F4518"><span class="dot"></span>Recomendaciones</a>
+      <a href="#t2-preguntas" class="nav-link" data-page="t2-preguntas" style="--dotcolor:#7A3B12"><span class="dot"></span>Preguntas y respuestas</a>
+    </div>
+  </nav>
+
+  <main id="content">
+
+    <!-- ============================================================ HOME ============================================================ -->
+    <section id="page-home" class="page active" style="--accent:#C89B3C" data-title="Resumen general">
+      <div class="page-head">
+        <span class="page-tag">Inicio</span>
+        <h2>Bienvenida a la bitácora</h2>
+        <p class="lede">Este espacio reúne las notas de dos talleres sobre el Programa de Atención Integral a Estudiantes con Talento Extraordinario del Sistema Educativo Plurinacional (SEP), complementadas con el Reglamento oficial aprobado mediante Resolución Ministerial N.º 0795/2021.</p>
+      </div>
+
+      <div class="card">
+        <p>El Ministerio de Educación de Bolivia reconoce que las niñas, niños y adolescentes con capacidades por encima de lo esperado para su edad o año de escolaridad tienen derecho a una atención educativa específica. Para responder a esa necesidad existe el <strong>Programa de Atención Integral a Estudiantes con Talento Extraordinario</strong>, normado por el Reglamento aprobado el 8 de diciembre de 2021. En Chuquisaca, el programa se aplica desde 2016 a través del Centro de Educación Especial Psicopedagógico.</p>
+        <p>Más abajo encontrarás un resumen de los aspectos más importantes tratados en los talleres. Usa el menú de la izquierda (o el botón «☰ Menú» en pantallas pequeñas) para explorar cada tema con más detalle.</p>
+      </div>
+
+      <h3 style="font-family:var(--serif); margin:26px 0 4px;">Aspectos más importantes</h3>
+      <div class="grid">
+
+        <div class="aspect-card" style="--c:#1B6C82">
+          <div class="aspect-icon">🌟</div>
+          <h3>¿Qué es el talento extraordinario?</h3>
+          <p>Un desarrollo de capacidades, potencialidades y habilidades muy por encima de lo esperado para la edad o el año de escolaridad, en una o varias áreas del saber.</p>
+          <a class="go" data-page="t1-tipos" href="#t1-tipos">Ver tipos y campos →</a>
+        </div>
+
+        <div class="aspect-card" style="--c:#3D5A80">
+          <div class="aspect-icon">🏛️</div>
+          <h3>Organización del programa</h3>
+          <p>Funciona en niveles: estratégico (Ministerio), programático (Educación Especial), departamental, distrital y de coordinación (redes de maestros, familias y estudiantes).</p>
+          <a class="go" data-page="t1-organizacion" href="#t1-organizacion">Ver organización →</a>
+        </div>
+
+        <div class="aspect-card" style="--c:#556B8D">
+          <div class="aspect-icon">🔍</div>
+          <h3>Detección</h3>
+          <p>Primera aproximación para sospechar un posible talento extraordinario, mediante una guía de observación que aplican maestros o piden las familias.</p>
+          <a class="go" data-page="t1-deteccion" href="#t1-deteccion">Ver proceso →</a>
+        </div>
+
+        <div class="aspect-card" style="--c:#2E4057">
+          <div class="aspect-icon">🧠</div>
+          <h3>Identificación</h3>
+          <p>Confirmación mediante una Evaluación Psicopedagógica Integral (talento general) o un Acta de Valoración de un producto u obra (talento específico).</p>
+          <a class="go" data-page="t1-identificacion" href="#t1-identificacion">Ver identificación →</a>
+        </div>
+
+        <div class="aspect-card" style="--c:#6C5B7B">
+          <div class="aspect-icon">🏫</div>
+          <h3>Modalidades y estrategias de atención</h3>
+          <p>Atención directa (en la unidad educativa) e indirecta (desde el Centro de Educación Especial): adaptaciones curriculares, aceleración, tutorías y escuelas mentoras.</p>
+          <a class="go" data-page="t1-estrategias" href="#t1-estrategias">Ver estrategias →</a>
+        </div>
+
+        <div class="aspect-card" style="--c:#B8860B">
+          <div class="aspect-icon">📚</div>
+          <h3>Adaptaciones curriculares de enriquecimiento</h3>
+          <p>Estrategias para ampliar, profundizar y diversificar el currículo: enriquecimiento de contenido, proceso, producto y entorno.</p>
+          <a class="go" data-page="t2-tipos" href="#t2-tipos">Ver tipos de enriquecimiento →</a>
+        </div>
+
+        <div class="aspect-card" style="--c:#C1440E">
+          <div class="aspect-icon">🎓</div>
+          <h3>Acciones complementarias</h3>
+          <p>Becas, encuentros de talento (a nivel de unidad educativa, distrital, departamental y nacional), intercambios y certificados/credenciales.</p>
+          <a class="go" data-page="t1-estrategias" href="#t1-estrategias">Ver acciones →</a>
+        </div>
+
+        <div class="aspect-card" style="--c:#274156">
+          <div class="aspect-icon">📜</div>
+          <h3>Marco normativo</h3>
+          <p>Reglamento aprobado por Resolución Ministerial N.º 0795/2021, con base en la Ley de Educación N.º 070 «Avelino Siñani – Elizardo Pérez» y otras normas conexas.</p>
+          <a class="go" data-page="t1-intro" href="#t1-intro">Ver marco normativo →</a>
+        </div>
+
+      </div>
+
+      <div class="card">
+  <h3>Reglamento del Programa</h3>
+  <iframe src="documentos/Talento.pdf"
+          style="width:100%; height:600px; border:1px solid var(--line); border-radius:10px;">
+  </iframe>
+      </div>
+
+      <h3 style="font-family:var(--serif); margin:30px 0 4px;">Los dos talleres de esta bitácora</h3>
+      <div class="taller-intro-row">
+        <div class="taller-box" style="background:#29335C">
+          <h3>Taller 1</h3>
+          <p>Programa de Atención Integral a Estudiantes con Talento Extraordinario: normativa, organización, detección, identificación, modalidades y estrategias de atención.</p>
+          <a href="#t1-intro" data-page="t1-intro">Explorar Taller 1</a>
+        </div>
+        <div class="taller-box" style="background:#B5451B">
+          <h3>Taller 2</h3>
+          <p>Adaptaciones Curriculares de Enriquecimiento: qué son, sus tipos, cómo se implementan, ejemplos, beneficios y recomendaciones para maestros.</p>
+          <a href="#t2-intro" data-page="t2-intro">Explorar Taller 2</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================= TALLER 1 ======================================================= -->
+
+    <section id="page-t1-intro" class="page" style="--accent:#29335C" data-title="Taller 1 · Presentación">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Programa de Atención Integral a Estudiantes con Talento Extraordinario</h2>
+        <p class="lede">Presentación general: para qué existe el programa, desde cuándo funciona en Chuquisaca y en qué normativa se sostiene.</p>
+      </div>
+
+      <div class="card">
+        <h3>De qué trata el taller</h3>
+        <p>El taller explica la normativa, la organización, los procedimientos y los apoyos destinados a estudiantes con capacidades superiores. En Chuquisaca, el programa funciona desde 2016, y desde la gestión 2021 se aplica el Reglamento vigente para la evaluación psicopedagógica integral y la atención educativa.</p>
+        <div class="note">
+          <strong>Corrección de referencia normativa:</strong> en la exposición se mencionó como base la «Ley N.º 079» y la «R.M. 079S». Contrastando con el documento oficial del programa, la referencia correcta es la <strong>Ley de Educación N.º 070 «Avelino Siñani – Elizardo Pérez»</strong> (20 de diciembre de 2010) y la <strong>Resolución Ministerial N.º 0795/2021</strong> (8 de diciembre de 2021), que aprueba el Reglamento del Programa. Es probable que se trate de una confusión al transcribir los números durante la exposición oral.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Finalidad del programa</h3>
+        <p>Detectar, identificar, atender y hacer seguimiento a estudiantes que demuestran capacidades superiores en una o varias áreas del conocimiento. Su aplicación es obligatoria en unidades educativas fiscales, de convenio y privadas, y alcanza a los subsistemas de Educación Regular, Alternativa y Especial, y Educación Superior de Formación Profesional.</p>
+      </div>
+
+
+    </section>
+
+
+    <section id="page-t1-tipos" class="page" style="--accent:#1B6C82" data-title="Tipos y campos de talento">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Tipos y campos de talento extraordinario</h2>
+        <p class="lede">El Reglamento reconoce tres tipos de talento y cuatro campos donde puede manifestarse el talento específico.</p>
+      </div>
+
+      <div class="card">
+        <h3>Tipos de talento extraordinario</h3>
+        <table class="info">
+          <tr><th>Tipo</th><th>Descripción</th></tr>
+          <tr>
+            <td><strong>General</strong></td>
+            <td>Desempeño superior en todos los campos del conocimiento, en equilibrio con el ser, saber, hacer y decidir. No significa que el estudiante deba destacar por igual en todo: puede tener capacidades superiores en las áreas académicas y un rendimiento regular en música, Educación Física u otras áreas técnicas. <em>No debe suponerse que un estudiante con talento general obtendrá siempre las calificaciones más altas en todas las asignaturas.</em></td>
+          </tr>
+          <tr>
+            <td><strong>Específico</strong></td>
+            <td>El estudiante sobresale en un área determinada del conocimiento o de la actividad humana, sin que esto se extienda necesariamente a las demás.</td>
+          </tr>
+          <tr>
+            <td><strong>Doble excepcionalidad</strong></td>
+            <td>Talento extraordinario en un campo, combinado con alguna limitación sensorial, física o motora.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Campos del talento específico</h3>
+        <p>El Reglamento agrupa las áreas del conocimiento en cuatro campos de la actividad humana (Art. 7):</p>
+        <table class="info">
+          <tr><th>Campo</th><th>Áreas mencionadas en el taller</th></tr>
+          <tr><td><strong>Científico–tecnológico</strong></td><td>Matemática, física, química, computación, programación y robótica (también geografía, astronomía, electrónica, entre otras, según el Reglamento).</td></tr>
+          <tr><td><strong>Humanístico–sociocultural</strong></td><td>Comunicación, lenguaje, literatura, producción de textos, recopilación de relatos, encuestas, poesía y declamación.</td></tr>
+          <tr><td><strong>Artístico</strong></td><td>Dibujo, pintura, escultura, y también música, danza, canto y teatro.</td></tr>
+          <tr><td><strong>Deportivo</strong></td><td>Disciplinas individuales (bicicleta, karate, tenis, entre otras). No se consideran deportes colectivos como el fútbol.</td></tr>
+        </table>
+        <div class="note">
+          <strong>Aclaración:</strong> durante el taller, «Artística» y «Musical» se presentaron como dos categorías separadas. En el Reglamento oficial, la música forma parte del mismo campo <strong>Artístico</strong> (Art. 7.III), junto con danza, canto, artes visuales y teatro. La separación en el taller responde a una organización práctica a nivel departamental (Chuquisaca cuenta con escuelas mentoras específicas para música y para artes visuales), no a dos campos oficiales distintos.
+        </div>
+        <p style="margin-top:12px;">Un criterio adicional mencionado en el taller: en el área deportiva se prioriza la detección hasta los 12 años, edad en la que aún puede observarse la capacidad natural del estudiante antes de que el entrenamiento se convierta en el factor determinante del rendimiento.</p>
+      </div>
+
+      <figure class="img-slot" style="border-style:solid; padding:0;">
+  <img src="imagenes/Tipos.jpg" alt="Tipos de Talento Extraordinario" style="width:100%; border-radius:12px; display:block;">
+  <figcaption style="padding:8px; font-size:0.85rem; color:var(--ink-soft);">Tipos de Talento Extraordinario</figcaption>
+</figure>
+    </section>
+
+
+    <section id="page-t1-organizacion" class="page" style="--accent:#3D5A80" data-title="Organización administrativa">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Organización administrativa y de gestión</h2>
+        <p class="lede">El programa se gestiona en distintos niveles de responsabilidad, desde el Ministerio de Educación hasta las redes de coordinación local.</p>
+      </div>
+
+      <div class="card">
+        <h3>Niveles de organización</h3>
+        <details class="sub" open>
+          <summary>a) Nivel estratégico</summary>
+          <div class="sub-body"><p>Conformado por el Ministerio de Educación y los Viceministerios (Educación Alternativa y Especial, Educación Regular, Educación Superior de Formación Profesional y Ciencia y Tecnología). Define las políticas, planes y disposiciones reglamentarias del programa a nivel nacional.</p></div>
+        </details>
+        <details class="sub">
+          <summary>b) Nivel programático</summary>
+          <div class="sub-body"><p>Corresponde a la Dirección General de Educación Especial, en coordinación con otras direcciones generales. Es responsable de elaborar instrumentos, guías y protocolos, y de capacitar a maestros y administrativos.</p></div>
+        </details>
+        <details class="sub">
+          <summary>c) Nivel operativo (organizativo)</summary>
+          <div class="sub-body"><p>A cargo de las Direcciones Departamentales de Educación, que organizan y ejecutan las acciones del programa en cada departamento.</p></div>
+        </details>
+        <details class="sub">
+          <summary>d) Equipo técnico departamental</summary>
+          <div class="sub-body"><p>Coordina la detección, identificación, atención y seguimiento a nivel de departamento, encabezado por la Subdirección de Educación Alternativa y Especial junto con el Centro de Educación Especial acreditado.</p></div>
+        </details>
+        <details class="sub">
+          <summary>e) Equipo técnico distrital</summary>
+          <div class="sub-body"><p>Articula las acciones entre las unidades educativas, las direcciones distritales y la instancia departamental.</p></div>
+        </details>
+        <details class="sub">
+          <summary>f) Equipo del Centro de Educación Especial (equipo multidisciplinario)</summary>
+          <div class="sub-body"><p>Integrado por el maestro o la maestra responsable de Talento Extraordinario y el equipo multiprofesional (principalmente psicología y pedagogía/psicopedagogía), encargado de las evaluaciones psicopedagógicas.</p></div>
+        </details>
+        <details class="sub">
+          <summary>g) Nivel de coordinación</summary>
+          <div class="sub-body"><p>Comprende las redes de estudiantes, de maestros y de padres y madres de familia. Estas redes permiten coordinar apoyos, dar seguimiento y sostener la continuidad de la atención en el tiempo.</p></div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h3>La situación en Chuquisaca</h3>
+        <p>El <strong>Centro de Educación Especial Psicopedagógico</strong> es la institución acreditada en Chuquisaca para realizar la detección, identificación y atención de estudiantes con talento extraordinario. En departamentos que no cuentan con un centro acreditado pueden establecerse convenios con universidades que dispongan de los profesionales necesarios (psicología, pedagogía y áreas específicas).</p>
+      </div>
+
+     
+    </section>
+
+
+    <section id="page-t1-deteccion" class="page" style="--accent:#556B8D" data-title="Detección">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Detección de estudiantes con talento extraordinario</h2>
+        <p class="lede">La primera aproximación para reconocer posibles señales de talento, antes de confirmar nada de manera formal.</p>
+      </div>
+
+      <div class="card">
+        <h3>¿Qué es la detección?</h3>
+        <p>La detección es la primera aproximación para reconocer posibles signos de talento extraordinario. <strong>No significa que el estudiante ya haya sido identificado</strong> como tal: es apenas una sospecha razonable que abre la puerta a una evaluación más profunda.</p>
+        <p>Puede iniciarse por intervención de maestros y maestras, o de los padres y madres de familia. El maestro cumple un papel importante porque conoce el desempeño cotidiano del estudiante; sin embargo, algunos casos pasan desapercibidos, ya que un docente puede tener entre 40 y 45 estudiantes a su cargo. Si la familia solicita la detección y la unidad educativa no atiende el pedido, puede acudir directamente al Centro de Educación Especial Psicopedagógico.</p>
+      </div>
+
+      <div class="card">
+        <h3>La guía de detección</h3>
+        <p>La detección se realiza mediante una guía organizada en tres versiones: talento general en primaria, talento general en secundaria, y talento específico para cada área. No contiene preguntas dirigidas al propio estudiante: es una lista de indicadores que el maestro valora a partir de la observación y el conocimiento que tiene del alumno. Cada indicador se califica como <strong>Nunca</strong>, <strong>A veces</strong> o <strong>Siempre</strong>.</p>
+        <div class="note">
+          <strong>Criterio numérico:</strong> para continuar hacia la identificación, se requiere un mínimo de 85% de indicadores en «Siempre» y un máximo de 10% en «Nunca». Por ejemplo, un estudiante que alcanza 90% en «Siempre» se considera un posible caso; si llega a 11% o 15% en «Nunca», queda descartado en esta etapa.
+        </div>
+        <p style="margin-top:12px;">Cuando el estudiante cumple los parámetros, el maestro elabora un informe sobre su aprovechamiento y la dirección de la unidad educativa remite la documentación al centro acreditado. También se considera la detección a partir de la participación en olimpiadas científicas, juegos deportivos, encuentros y ferias de ciencia y tecnología.</p>
+      </div>
+
+      <figure class="img-slot" style="border-style:solid; padding:0;">
+  <img src="imagenes/Observar.jpg" alt="Maestro observando a sus estudiantes oservando si cumplen los requisitos de talento extraordinario" style="width:100%; border-radius:12px; display:block;">
+  <figcaption style="padding:8px; font-size:0.85rem; color:var(--ink-soft);">Maestro observando a sus estudiantes oservando si cumplen los requisitos de talento extraordinario</figcaption>
+</figure>
+    </section>
+
+
+    <section id="page-t1-identificacion" class="page" style="--accent:#2E4057" data-title="Identificación">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Identificación del talento extraordinario</h2>
+        <p class="lede">El paso que confirma —o descarta— si un estudiante detectado reúne las condiciones para ser parte del programa.</p>
+      </div>
+
+      <div class="card">
+        <h3>a) Identificación de talento general</h3>
+        <p>Se realiza mediante una <strong>Evaluación Psicopedagógica Integral</strong>, a cargo del equipo multidisciplinario. La evaluación psicológica considera: capacidad cognitiva, coeficiente intelectual, motivación, creatividad, procesamiento de la información, metacognición, madurez emocional, relaciones sociales y situación familiar.</p>
+        <div class="note">
+          <strong>Sobre el coeficiente intelectual:</strong> en el taller se mencionó que el mínimo aplicado actualmente en Bolivia es 120, y que se trabaja en una actualización que podría elevarlo a 130. El Reglamento nacional no fija un valor numérico de coeficiente intelectual en su texto; este dato corresponde a un criterio de aplicación práctica mencionado por el equipo técnico, por lo que conviene verificarlo con la normativa vigente al momento de usarlo.
+        </div>
+        <p style="margin-top:12px;">La evaluación pedagógica, por su parte, determina si los aprendizajes están consolidados, si los conocimientos corresponden al curso y la edad del estudiante o los superan, qué apoyos necesita y si está en condiciones de una posible aceleración. Al finalizar, se emite el <strong>Informe Psicopedagógico Integral</strong> con los resultados y las recomendaciones.</p>
+      </div>
+
+      <div class="card">
+        <h3>b) Identificación de talento específico</h3>
+        <p>En las áreas científica, humanística, artística, musical y deportiva, el coeficiente intelectual no determina por sí solo la identificación. Se conforma un <strong>Equipo de Valoración de Área</strong>, integrado por tres a cinco profesionales especializados, que elabora criterios y los registra en un <strong>Acta de Valoración</strong>.</p>
+        <p>El estudiante debe demostrar su capacidad de manera objetiva: mediante una obra artística, una interpretación musical, un proyecto, un prototipo, una producción escrita, una ejecución deportiva u otra evidencia relacionada con el área. El Acta de Valoración es el documento que determina la identificación del talento específico; la Evaluación Psicopedagógica Integral se realiza de forma complementaria para normar el registro oficial del estudiante.</p>
+      </div>
+
+   
+    </section>
+
+
+    <section id="page-t1-modalidades" class="page" style="--accent:#6C5B7B" data-title="Modalidades de atención">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Modalidades de atención</h2>
+        <p class="lede">Una vez identificado el talento, la atención integral se organiza en dos modalidades complementarias.</p>
+      </div>
+
+      <div class="card">
+        <h4>a) Modalidad directa</h4>
+        <p>Se desarrolla en la propia unidad educativa donde estudia el alumno. Comprende:</p>
+        <ul>
+          <li>Coordinación con los maestros y adaptaciones curriculares de enriquecimiento.</li>
+          <li>Seguimiento del rendimiento y orientación pedagógica.</li>
+          <li>Profundización de contenidos.</li>
+          <li>Coordinación con la familia.</li>
+          <li>Prevención del aislamiento y del etiquetamiento del estudiante frente a sus compañeros.</li>
+        </ul>
+
+        <h4>b) Modalidad indirecta</h4>
+        <p>Comprende los apoyos educativos brindados desde el Centro de Educación Especial Psicopedagógico:</p>
+        <ul>
+          <li>Trabajos externos y orientación psicopedagógica.</li>
+          <li>Apoyo emocional y seguimiento especializado.</li>
+          <li>Coordinación con otros profesionales y derivaciones cuando corresponde.</li>
+          <li>Orientación a maestros y a familias.</li>
+        </ul>
+      </div>
+
+     
+    </section>
+
+
+    <section id="page-t1-estrategias" class="page" style="--accent:#355C7D" data-title="Estrategias educativas">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Estrategias educativas y acciones complementarias</h2>
+        <p class="lede">Las herramientas concretas con las que el programa acompaña a cada estudiante, y las actividades adicionales que enriquecen su desarrollo.</p>
+      </div>
+
+      <div class="card">
+        <details class="sub" open>
+          <summary>6.1 Adaptaciones curriculares de enriquecimiento</summary>
+          <div class="sub-body">
+            <p>Se aplican en las áreas donde el estudiante demuestra conocimientos o habilidades superiores. No responden a una dificultad, sino a una potencialidad: su propósito es ampliar y profundizar. El maestro puede asignar un trabajo adicional de investigación, un proyecto relacionado con el contenido, o una actividad para indagar y profundizar en la temática. Este tema se desarrolla en detalle en el <a data-page="t2-intro" href="#t2-intro">Taller 2</a>.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>6.2 Aceleración pedagógica (salto de curso)</summary>
+          <div class="sub-body">
+            <p>Consiste en el salto de curso. Se aplica preferentemente a estudiantes con <strong>talento general</strong> que poseen conocimientos superiores al grado y la edad que les corresponden. No es necesario aplicar esta estrategia en todas las materias: si el estudiante llega a un nivel acorde a sus capacidades tras el salto y deja de destacar, las adaptaciones de enriquecimiento se aplican solo mientras siga demostrando conocimientos superiores.</p>
+            <p>El proceso comprende: aplicación de la guía de detección, informe del maestro, derivación al Centro de Educación Especial Psicopedagógico, evaluación psicológica, evaluación pedagógica, valoración de la madurez emocional, emisión del informe psicopedagógico, decisión de los padres, evaluaciones en la unidad educativa, emisión del Acta Supletoria y trámite administrativo.</p>
+            <div class="note"><strong>Importante:</strong> la aceleración no depende solamente del coeficiente intelectual. La madurez emocional es clave para saber si el estudiante podrá adaptarse a compañeros de mayor edad y a nuevas exigencias. El informe puede recomendar el salto de curso, pero la decisión final corresponde a los padres, quienes deben acompañar emocionalmente al estudiante.</div>
+            <h4>Evaluaciones para el salto de curso</h4>
+            <p>La unidad educativa evalúa al estudiante según el plan anual curricular del curso que pretende superar, en áreas académicas, áreas técnicas y todos los contenidos programados para la gestión. No es necesario obtener 100 puntos en todas las materias: se aplica el reglamento general de evaluación, que permite aprobar desde 50 puntos. Si el estudiante reprobara una evaluación, el proceso se detiene, y puede volver a solicitar la aceleración en la siguiente gestión.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>6.3 Tutorías, pasantías y emprendimiento</summary>
+          <div class="sub-body">
+            <p>Las tutorías —internas o externas— permiten profundizar habilidades o conocimientos. El programa también brinda apoyo para que el estudiante pueda realizar una pasantía o establecer un emprendimiento propio, poniendo en práctica lo aprendido en un contexto real.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>6.4 Escuelas mentoras</summary>
+          <div class="sub-body">
+            <p>Son instituciones que mantienen convenios con la Dirección Departamental de Educación y apoyan a estudiantes con talento específico. En Chuquisaca existen cuatro escuelas mentoras:</p>
+            <table class="info">
+              <tr><th>Institución</th><th>Área que atiende</th></tr>
+              <tr><td>TECBA (Tecnológico Boliviano Alemán)</td><td>Programación, robótica e inglés.</td></tr>
+              <tr><td>Simeón Roncal</td><td>Área musical.</td></tr>
+              <tr><td>Miguel Ángel Valda</td><td>Área musical.</td></tr>
+              <tr><td>Oropeza</td><td>Dibujo, pintura y escultura.</td></tr>
+            </table>
+            <p>Se realiza coordinación permanente con los docentes de estas instituciones y seguimiento al trabajo desarrollado por los estudiantes.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>6.5 Centro de Talento Extraordinario de Alto Desempeño</summary>
+          <div class="sub-body">
+            <p>El Reglamento establece la existencia de un Centro de Talento Extraordinario de alto desempeño, que debería contar con laboratorios, campos deportivos y planificación especializada, y existir como mínimo uno por departamento. Al momento del taller, <strong>Chuquisaca no cuenta todavía con este centro</strong>.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>6.6 Acciones complementarias</summary>
+          <div class="sub-body">
+            <h4>Becas</h4>
+            <p>Existen convenios con instituciones de educación superior para apoyar a estudiantes que terminan el bachillerato, entre ellas la Universidad Católica. Hay un preacuerdo que establece una reducción del 50% en la mensualidad para estudiantes con talento extraordinario, además de becas o apoyos para inglés y cursos complementarios relacionados con la formación profesional elegida.</p>
+            <h4>Encuentros</h4>
+            <p>Desde la gestión 2021 se desarrollan encuentros de productos, habilidades y talento extraordinario, en cuatro fases: unidad educativa, distrital, departamental y nacional. En cada etapa se seleccionan los estudiantes destacados que avanzan a la siguiente fase. Como ejemplo, una estudiante de 2.º de secundaria obtuvo la primera medalla de oro a nivel universitario en el área humanística y sociocultural; en el área musical también se destacaron estudiantes de Tarabuco, Padilla, Macharetí, Camargo y Culpina.</p>
+            <h4>Intercambios</h4>
+            <p>Se organizan intercambios para que los estudiantes conozcan la realidad educativa de otros países y fortalezcan su formación. Algunos estudiantes de Chuquisaca viajaron a Colombia y Argentina.</p>
+            <h4>Certificados y credenciales</h4>
+            <p>Los estudiantes destacados en los encuentros reciben certificados y credenciales, que sirven como aval para gestionar becas cuando continúan su formación profesional.</p>
+          </div>
+        </details>
+      </div>
+
+      <figure class="img-slot" style="border-style:solid; padding:0;">
+  <img src="imagenes/Estrategia.png" alt="Organigrama de niveles de atención" style="width:100%; border-radius:12px; display:block;">
+  <figcaption style="padding:8px; font-size:0.85rem; color:var(--ink-soft);">Organigrama de niveles de atención</figcaption>
+</figure>
+    </section>
+
+
+    <section id="page-t1-operativos" class="page" style="--accent:#4B6584" data-title="Operativos y registro">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Operativos de detección y registro</h2>
+        <p class="lede">El programa organiza su trabajo anual en dos momentos clave, y da seguimiento a cada estudiante mediante un sistema de registro nacional.</p>
+      </div>  
+
+      <div class="card">
+        <h3>Los dos operativos por gestión</h3>
+        <ol>
+          <li><strong>Operativo inicial:</strong> al comienzo del año escolar. Permite avanzar los posibles casos de aceleración, ya que este proceso solo puede realizarse durante el primer trimestre.</li>
+          <li><strong>Operativo final:</strong> al concluir la gestión. Permite avanzar la detección y la evaluación de cara a la siguiente gestión, y se prioriza a estudiantes ganadores de olimpiadas científicas, juegos deportivos y otros eventos competitivos reconocidos.</li>
+        </ol>
+        <p>La identificación formal se realiza desde 1.º de primaria hasta 5.º de secundaria. En el nivel inicial no se aplica una evaluación de identificación; en su lugar, existe una orientación a la familia y a los maestros cuando un niño o niña presenta logros de precocidad.</p>
+      </div>
+
+      <div class="card">
+        <h3>Registro y seguimiento</h3>
+        <p>Todos los estudiantes identificados deben registrarse en el <strong>Sistema de Información Educativa (SIE)</strong>. Este registro permite dar continuidad a la atención, planificar recursos, organizar a los equipos técnicos y preparar respuestas educativas en los niveles distrital, departamental y nacional.</p>
+        <p>Al momento del taller, Chuquisaca contaba con aproximadamente <strong>50 estudiantes identificados</strong>, entre talento general y talento específico.</p>
+      </div>
+
+
+    </section>
+
+
+    <section id="page-t1-rural" class="page" style="--accent:#45526E" data-title="Atención en área rural">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Atención en el área rural</h2>
+        <p class="lede">El procedimiento es el mismo en el área urbana y en el área rural, pero enfrenta desafíos logísticos particulares.</p>
+      </div>
+
+      <div class="card">
+        <p>Las principales dificultades mencionadas en el taller son la distancia, la falta de transporte y el traslado de estudiantes y maestros, lo que dificulta llegar a todas las unidades educativas. En muchos casos, los estudiantes deben trasladarse hasta la ciudad para las evaluaciones; en cambio, la orientación a los maestros puede realizarse a distancia, por ejemplo mediante videollamada.</p>
+        <div class="note">
+          <strong>Localidades mencionadas en el taller</strong> (tal como se registraron durante la exposición; los nombres pueden presentar variaciones respecto de la grafía oficial): Tomina, Villa Charcas, Macharetí, Monteagudo y Camargo, entre otras, cuentan con estudiantes identificados o que ya saltaron de curso.
+        </div>
+      </div>
+
+  
+    </section>
+
+
+    <section id="page-t1-preguntas" class="page" style="--accent:#274156" data-title="Preguntas y respuestas – Taller 1">
+      <div class="page-head">
+        <span class="page-tag">Taller 1</span>
+        <h2>Preguntas y respuestas</h2>
+        <p class="lede">Dudas planteadas por las y los participantes del taller, con las respuestas del equipo técnico.</p>
+      </div>
+
+      <div class="card">
+        <h4>1. ¿Cómo distinguir el talento innato de la competencia adelantada?</h4>
+        <p>La sobresaliencia puede presentarse en niños cuyos padres adelantan contenidos en casa, en hijos de docentes, o en estudiantes que realizan tareas junto a hermanos mayores. Estos casos pueden aprender contenidos de manera mecánica y parecer adelantados sin serlo realmente. El maestro no siempre puede distinguirlo dentro del aula: debe aplicar la guía de detección y derivar el caso. La Evaluación Psicopedagógica Integral es la que permite determinar si existe un talento extraordinario real o si se trata de una sobresaliencia aparente, ligada al entorno más que a la capacidad de la niña o el niño.</p>
+
+        <h4>2. ¿Cómo se aplica el enriquecimiento en el área rural?</h4>
+        <p>Las adaptaciones las realiza el maestro del aula en las áreas donde el estudiante demuestra conocimientos superiores; puede asignarle un trabajo de investigación o un proyecto para profundizar la temática, sin necesidad de recursos adicionales.</p>
+
+        <h4>3. ¿Cómo atender al estudiante sin descuidar al resto del curso?</h4>
+        <p>No se necesita brindar una atención individual durante toda la clase. El maestro puede trabajar el mismo tema con todo el curso y, además, asignar al estudiante con talento extraordinario un trabajo adicional acorde a su nivel.</p>
+
+        <h4>4. ¿Cómo se trabaja con las escuelas mentoras?</h4>
+        <p>El estudiante asiste a la institución correspondiente a su área de talento. Se coordina con el docente especializado de esa institución y se realiza seguimiento al trabajo que va desarrollando.</p>
+
+        <h4>5. ¿Qué apoyos reciben los maestros?</h4>
+        <p>Se hace seguimiento al rendimiento del estudiante para reconocer en qué áreas continúa destacando. Según los resultados, se orienta al maestro sobre cómo aplicar la adaptación curricular de enriquecimiento, y pueden coordinarse apoyos adicionales con otros profesionales.</p>
+
+        <h4>6. ¿Cómo debe actuar el maestro ante un posible caso?</h4>
+        <p>Debe aplicar la guía de detección y remitir los resultados. No le corresponde al maestro determinar por sí solo si existe talento extraordinario, ni descartar una posible sobresaliencia: eso se define mediante la Evaluación Psicopedagógica Integral.</p>
+
+        <h4>7. ¿Cómo se atiende la parte emocional del estudiante?</h4>
+        <p>La evaluación permite reconocer situaciones emocionales o sociales que requieran apoyo. En esos casos se brindan recomendaciones a estudiantes, maestros y padres de familia, y se organizan talleres sobre manejo de la frustración e inteligencia emocional. Cuando se necesita un apoyo mayor, se coordina con otras instituciones especializadas.</p>
+      </div>
+    </section>
+
+
+    <!-- ======================================================= TALLER 2 ======================================================= -->
+
+    <section id="page-t2-intro" class="page" style="--accent:#B5451B" data-title="Taller 2 · Presentación">
+      <div class="page-head">
+        <span class="page-tag">Taller 2</span>
+        <h2>Adaptaciones Curriculares de Enriquecimiento para Estudiantes con Talento Extraordinario</h2>
+        <p class="lede">Un taller dedicado por completo a una de las estrategias más usadas del programa: el enriquecimiento curricular.</p>
+      </div>
+
+      <div class="card">
+        <p>Este segundo taller profundiza en las <strong>adaptaciones curriculares de enriquecimiento</strong>, la estrategia de atención directa más frecuente dentro del programa (introducida brevemente en el punto 6.1 del Taller 1). Aquí se explica qué son, por qué son importantes, sus cuatro tipos, cómo se implementan paso a paso, ejemplos reales trabajados en Chuquisaca, sus beneficios y algunas recomendaciones prácticas para los maestros.</p>
+      </div>
+
+  
+    </section>
+
+
+    <section id="page-t2-que-son" class="page" style="--accent:#C97C2A" data-title="¿Qué son?">
+      <div class="page-head">
+        <span class="page-tag">Taller 2</span>
+        <h2>¿Qué son las adaptaciones curriculares de enriquecimiento?</h2>
+        <p class="lede">Una estrategia para ir más allá del currículo regular, no para simplificarlo.</p>
+      </div>
+
+      <div class="card">
+        <p>Son estrategias destinadas a estudiantes con talento extraordinario que permiten <strong>ampliar, profundizar y diversificar</strong> el currículo regular de acuerdo con sus capacidades, intereses y necesidades. Permiten trabajar contenidos con mayor complejidad y profundidad, favoreciendo el desarrollo de sus potencialidades.</p>
+        <div class="note">
+          <strong>No deben confundirse con:</strong>
+          <ul style="margin:8px 0 0 18px;">
+            <li>La <em>flexibilización curricular</em>, que ajusta el currículo para hacerlo más accesible.</li>
+            <li>Las <em>adaptaciones curriculares de acceso o de apoyo</em>, orientadas a compensar una dificultad de aprendizaje.</li>
+          </ul>
+          Las adaptaciones de enriquecimiento, en cambio, se orientan a <strong>profundizar</strong> los aprendizajes de un estudiante que ya domina el contenido esperado para su curso.
+        </div>
+      </div>
+
+    </section>
+
+
+    <section id="page-t2-importancia" class="page" style="--accent:#A6763B" data-title="Importancia">
+      <div class="page-head">
+        <span class="page-tag">Taller 2</span>
+        <h2>Importancia del enriquecimiento curricular</h2>
+        <p class="lede">Por qué no basta con dejar que el estudiante avance solo.</p>
+      </div>
+
+      <div class="card">
+        <p>Los estudiantes con talento extraordinario pueden dominar con rapidez determinados contenidos y percibir las actividades habituales del aula como repetitivas. Esta situación puede generar aburrimiento, desmotivación o desinterés. Durante la exposición se mencionó que la ausencia de un enriquecimiento adecuado puede relacionarse con un porcentaje cercano al 20% de bajo rendimiento o desinterés en estos estudiantes <em>(dato mencionado de forma referencial en el taller, sin cita a una fuente específica)</em>.</p>
+        <p>El enriquecimiento curricular busca mantener la motivación del estudiante y favorecer su desarrollo integral en los ámbitos cognitivo, emocional y social. También contribuye al fortalecimiento del pensamiento crítico y la creatividad.</p>
+      </div>
+
+    
+    </section>
+
+
+    <section id="page-t2-tipos" class="page" style="--accent:#B8860B" data-title="Tipos de enriquecimiento">
+      <div class="page-head">
+        <span class="page-tag">Taller 2</span>
+        <h2>Tipos de enriquecimiento curricular</h2>
+        <p class="lede">Cada estudiante presenta características y capacidades diferentes, por lo que las adaptaciones deben elaborarse según sus necesidades. El taller propuso cuatro tipos principales.</p>
+      </div>
+
+      <div class="card">
+        <details class="sub" open>
+          <summary>1. Enriquecimiento de contenido</summary>
+          <div class="sub-body">
+            <p>Consiste en ampliar y profundizar los temas del currículo cuando el estudiante demuestra conocimientos avanzados en un área determinada: contenidos más complejos, investigaciones, proyectos especiales y actividades interdisciplinarias.</p>
+            <p><strong>Ejemplos del taller:</strong> investigaciones científicas autónomas en física o química; análisis literarios y producción de textos; proyectos que relacionan matemáticas, ciencia y humanidades.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>2. Enriquecimiento del proceso</summary>
+          <div class="sub-body">
+            <p>Se relaciona con la <em>forma de aprender</em>: promueve un aprendizaje profundo y autónomo mediante la resolución de problemas, el pensamiento crítico y el trabajo independiente.</p>
+            <p><strong>Ejemplos del taller:</strong> debates académicos, experimentos científicos y talleres creativos. Se destacó la importancia de plantear retos adecuados que permitan al estudiante desarrollar sus capacidades a un nivel más avanzado.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>3. Enriquecimiento del producto</summary>
+          <div class="sub-body">
+            <p>Permite que el estudiante demuestre lo aprendido mediante trabajos y creaciones propias: presentaciones multimedia, prototipos tecnológicos, ensayos, publicaciones y expresiones artísticas o culturales.</p>
+            <p><strong>Ejemplos del taller:</strong> prototipos tecnológicos diseñados para ayudar a personas con dificultades de movilidad, y proyectos pensados para apoyar a bomberos durante incendios forestales. También se mencionaron ensayos, recopilación de relatos ancestrales, producciones teatrales, pinturas, esculturas, dibujos y composiciones musicales. Se resaltó especialmente el valor de los productos con utilidad social.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>4. Enriquecimiento del entorno</summary>
+          <div class="sub-body">
+            <p>Consiste en adecuar los espacios, recursos y apoyos disponibles para favorecer el desarrollo del talento extraordinario: laboratorios especializados, tecnología avanzada, bibliotecas, clubes, expertos, tutorías y mentorías.</p>
+            <p>Se destacó la importancia de contar con apoyo especializado cuando el estudiante necesita profundizar más allá de las actividades regulares. Las tutorías pueden ofrecer acompañamiento extraescolar y trabajar contenidos de mayor complejidad.</p>
+          </div>
+        </details>
+      </div>
+
+      <figure class="img-slot" style="border-style:solid; padding:0;">
+  <img src="imagenes/Ejemplos.jpg" alt="Tipos de enriquecimiento" style="width:100%; border-radius:12px; display:block;">
+  <figcaption style="padding:8px; font-size:0.85rem; color:var(--ink-soft);">Tipos de enriquecimiento</figcaption>
+</figure>
+    </section>
+
+
+    <section id="page-t2-implementacion" class="page" style="--accent:#8C6239" data-title="Proceso de implementación">
+      <div class="page-head">
+        <span class="page-tag">Taller 2</span>
+        <h2>Proceso de implementación</h2>
+        <p class="lede">Seis pasos para poner en marcha una adaptación curricular de enriquecimiento, del diagnóstico al ajuste continuo.</p>
+      </div>
+
+      <div class="card">
+        <ol class="steps">
+          <li><strong>Identificación de necesidades:</strong> se evalúan las capacidades, intereses y estilos de aprendizaje del estudiante para establecer el punto de partida.</li>
+          <li><strong>Diseño y planificación:</strong> se definen objetivos, actividades, recursos y tiempos, de acuerdo con el currículo regular.</li>
+          <li><strong>Aplicación:</strong> las actividades se desarrollan en un ambiente estimulante y con acompañamiento continuo del docente.</li>
+          <li><strong>Seguimiento:</strong> se registran periódicamente los logros, dificultades y avances del estudiante.</li>
+          <li><strong>Evaluación:</strong> se valora el impacto de las adaptaciones en el desarrollo académico, emocional y social, con instrumentos cualitativos y cuantitativos.</li>
+          <li><strong>Ajuste continuo:</strong> las actividades se revisan y mejoran según los resultados y la retroalimentación del estudiante, la familia y el equipo docente.</li>
+        </ol>
+      </div>
+
+      <figure class="img-slot" style="border-style:solid; padding:0;">
+  <img src="imagenes/Proceso.png" alt="Proceso de implementación de Adaptaciones de Enriquecimiento" style="width:100%; border-radius:12px; display:block;">
+  <figcaption style="padding:8px; font-size:0.85rem; color:var(--ink-soft);">Proceso de implementación de Adaptaciones de Enriquecimiento</figcaption>
+</figure>
+    </section>
+
+
+    <section id="page-t2-ejemplos" class="page" style="--accent:#C1440E" data-title="Ejemplos de actividades">
+      <div class="page-head">
+        <span class="page-tag">Taller 2</span>
+        <h2>Ejemplos de actividades</h2>
+        <p class="lede">Del aula a los encuentros nacionales: así escalan las actividades de enriquecimiento.</p>
+      </div>
+
+      <div class="card">
+        <p>Entre las principales actividades mencionadas en el taller se encuentran las ferias científicas, las olimpiadas del conocimiento, los concursos literarios y artísticos, los proyectos interdisciplinarios de investigación, los talleres de innovación y emprendimiento, y las redes de jóvenes con talento extraordinario.</p>
+        <p>También se desarrollaron proyectos relacionados con información, programación, tecnología, e investigaciones con plantas medicinales. Muchas de estas actividades se organizan primero dentro del aula, en la propia unidad educativa, y luego escalan a nivel distrital, departamental y nacional.</p>
+      </div>
+
+      <figure class="img-slot" style="border-style:solid; padding:0;">
+  <img src="imagenes/Feria.jpg" alt="Estudiantes trabajando una feria educativa" style="width:100%; border-radius:12px; display:block;">
+  <figcaption style="padding:8px; font-size:0.85rem; color:var(--ink-soft);">Estudiantes trabajando una feria educativa</figcaption>
+</figure>
+    </section>
+
+
+    <section id="page-t2-beneficios" class="page" style="--accent:#9C6644" data-title="Beneficios">
+      <div class="page-head">
+        <span class="page-tag">Taller 2</span>
+        <h2>Beneficios del enriquecimiento curricular</h2>
+        <p class="lede">Los efectos positivos observados van más allá de lo académico.</p>
+      </div>
+
+      <div class="card">
+        <h4>Rendimiento académico</h4>
+        <p>Favorece niveles más altos de logro y permite desarrollar mayores capacidades.</p>
+        <h4>Motivación y autoconcepto</h4>
+        <p>Fortalece el compromiso, la confianza y la satisfacción personal del estudiante.</p>
+        <h4>Desarrollo social y emocional</h4>
+        <p>Contribuye a mejorar la colaboración, la empatía, la gestión emocional y la capacidad de relacionarse con otros estudiantes.</p>
+      </div>
+
+      <figure class="img-slot" style="border-style:solid; padding:0;">
+  <img src="imagenes/Beneficios.jpg" alt="Estudiantes celebrando un logro académico juntos." style="width:100%; border-radius:12px; display:block;">
+  <figcaption style="padding:8px; font-size:0.85rem; color:var(--ink-soft);">Estudiantes celebrando un logro académico juntos</figcaption>
+</figure>
+    </section>
+
+
+    <section id="page-t2-recomendaciones" class="page" style="--accent:#6F4518" data-title="Recomendaciones">
+      <div class="page-head">
+        <span class="page-tag">Taller 2</span>
+        <h2>Recomendaciones para los maestros</h2>
+        <p class="lede">Buenas prácticas señaladas por el expositor para aplicar el enriquecimiento de manera efectiva.</p>
+      </div>
+
+      <div class="card">
+        <ul>
+          <li>Conocer los intereses, fortalezas y necesidades de cada estudiante.</li>
+          <li>Diseñar actividades desafiantes, pero alcanzables.</li>
+          <li>Fomentar la autonomía y la creatividad.</li>
+          <li>Trabajar de manera coordinada con especialistas y con la familia.</li>
+          <li>Apoyarse en las redes de maestros y en los equipos de valoración para mejorar los trabajos realizados por los estudiantes.</li>
+        </ul>
+      </div>
+
+    </section>
+
+
+    <section id="page-t2-preguntas" class="page" style="--accent:#7A3B12" data-title="Preguntas y respuestas – Taller 2">
+      <div class="page-head">
+        <span class="page-tag">Taller 2</span>
+        <h2>Preguntas y respuestas</h2>
+        <p class="lede">Dudas planteadas por las y los participantes durante el segundo taller.</p>
+      </div>
+
+      <div class="card">
+        <h4>1. Discapacidad y talento extraordinario</h4>
+        <p>Un estudiante puede demostrar capacidades avanzadas en determinadas áreas aunque presente otras condiciones. Se mencionaron casos de estudiantes con síndrome de Asperger con niveles académicos superiores en áreas específicas. Las adaptaciones deben centrarse en las áreas donde se evidencian mayores potencialidades: es el caso, precisamente, de la <strong>doble excepcionalidad</strong> descrita en el Taller 1.</p>
+
+        <h4>2. Mentorías</h4>
+        <p>Se trabaja en una propuesta para establecer requisitos y organizar mejor este apoyo. Entre los aspectos considerados están la especialización del mentor en el área correspondiente, su formación en adaptaciones curriculares, y la elaboración de un plan de trabajo. Por ahora, estas mentorías son limitadas. El acompañamiento podría desarrollarse durante aproximadamente seis meses y concluir con la presentación de un producto realizado por el estudiante. Algunos estudiantes ya reciben apoyo especializado para prepararse en olimpiadas académicas, con contenidos y ejercicios de mayor complejidad.</p>
+
+        <h4>3. Edad para realizar la detección</h4>
+        <p>Algunos niños pueden demostrar capacidades avanzadas desde edades tempranas, como leer, escribir o realizar operaciones matemáticas. El Reglamento contempla evaluaciones formales desde los 6 años. También debe considerarse la madurez emocional y social, ya que influye en la adaptación del estudiante a mayores niveles de exigencia académica.</p>
+
+        <h4>4. Espacio para presentar productos</h4>
+        <p>Anteriormente se realizaban encuentros y certámenes específicos para presentar trabajos y capacidades. Actualmente también se plantean actividades dentro de las propias unidades educativas, para facilitar la detección y valoración temprana de estudiantes con talento.</p>
+
+        <h4>5. Detección e identificación, en síntesis</h4>
+        <p>El proceso inicia con una guía de detección aplicada por el docente, que funciona como una lista de cotejo para reconocer posibles señales de talento extraordinario. Cuando el estudiante alcanza un porcentaje alto de los indicadores (mencionado en este taller como cercano al 80%), puede solicitarse una Evaluación Psicopedagógica Integral para confirmar o descartar el caso.</p>
+        <div class="note"><strong>Nota:</strong> el Taller 1 menciona un umbral de 85% en «Siempre» para continuar con la identificación, mientras que aquí se habla de un 80% de forma más general. Ambas cifras fueron mencionadas de manera verbal en distintos momentos; conviene remitirse al instrumento oficial de la guía de detección para el porcentaje exacto vigente.</div>
+        <p style="margin-top:12px;">En los casos de talento específico también participan docentes especialistas y equipos de valoración: el producto o desempeño presentado por el estudiante tiene un papel central en esa valoración.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="site">
+  <p>Bitácora elaborada a partir de las notas de dos talleres sobre el Programa de Atención Integral a Estudiantes con Talento Extraordinario, y del Reglamento aprobado mediante Resolución Ministerial N.º 0795/2021 · Ministerio de Educación, Estado Plurinacional de Bolivia.</p>
+</footer>
+
+<script>
+  const links = document.querySelectorAll('[data-page]');
+  const sidebar = document.getElementById('sidebar');
+  const menuToggle = document.getElementById('menuToggle');
+  const accentbar = document.getElementById('accentbar');
+
+  function showPage(id){
+    const target = document.getElementById('page-' + id);
+    if(!target) return;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    target.classList.add('active');
+
+    document.querySelectorAll('.nav-link').forEach(a => {
+      a.classList.toggle('active', a.dataset.page === id);
+    });
+
+    const accent = getComputedStyle(target).getPropertyValue('--accent').trim();
+    if(accent){ accentbar.style.background = accent; }
+
+    const t = target.dataset.title || 'Bitácora sobre el Talento Extraordinario';
+    document.title = t + ' · Bitácora sobre el Talento Extraordinario';
+
+    sidebar.classList.remove('open');
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+
+  links.forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = el.dataset.page;
+      history.pushState(null, '', '#' + id);
+      showPage(id);
+    });
+  });
+
+  menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+  window.addEventListener('popstate', () => {
+    const id = location.hash ? location.hash.slice(1) : 'home';
+    showPage(document.getElementById('page-' + id) ? id : 'home');
+  });
+
+  const initial = location.hash ? location.hash.slice(1) : 'home';
+  showPage(document.getElementById('page-' + initial) ? initial : 'home');
+</script>
+
+</body>
+</html>
